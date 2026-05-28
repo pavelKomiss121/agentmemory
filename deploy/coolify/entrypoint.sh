@@ -94,6 +94,8 @@ fi
 
 AGENTMEMORY_SECRET="$(cat "$HMAC_FILE")"
 export AGENTMEMORY_SECRET
+export VIEWER_ALLOWED_HOSTS="${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.shop,memory-viewer.domenpashin.shop:443}"
+export VIEWER_ALLOWED_ORIGINS="${VIEWER_ALLOWED_ORIGINS:-https://memory-viewer.domenpashin.shop,https://memory.domenpashin.shop}"
 
 VIEWER_PORT="${AGENTMEMORY_VIEWER_PORT:-3113}"
 
@@ -107,8 +109,23 @@ start_viewer_proxy() {
     fi
     sleep 1
   done
-  # Viewer binds 127.0.0.1:3113, so 0.0.0.0:3113 conflicts (EADDRINUSE).
-  # Bind socat to the container's Docker-network IP instead.
+  # Viewer binds 127.0.0.1:3113. Binding socat to 0.0.0.0:3113 conflicts
+  # (EADDRINUSE). Use SO_BINDTODEVICE on the container NIC instead so Traefik
+  # can reach the port on the Docker network without touching loopback.
+  IFACE="${AGENTMEMORY_VIEWER_BIND_IFACE:-}"
+  if [ -z "$IFACE" ]; then
+    for n in $(ls /sys/class/net 2>/dev/null); do
+      case "$n" in
+        lo|docker*|br-*|veth*) ;;
+        *) IFACE="$n"; break ;;
+      esac
+    done
+  fi
+  if [ -n "$IFACE" ]; then
+    socat "TCP-LISTEN:${VIEWER_PORT},bindtodevice=${IFACE},fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
+    echo "agentmemory: viewer proxy listening on ${IFACE}:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
+    return 0
+  fi
   BIND_IP="${AGENTMEMORY_VIEWER_BIND_IP:-}"
   if [ -z "$BIND_IP" ]; then
     for ip in $(hostname -I 2>/dev/null); do
@@ -119,7 +136,7 @@ start_viewer_proxy() {
     done
   fi
   if [ -z "$BIND_IP" ]; then
-    echo "agentmemory: viewer proxy skipped (could not resolve container IP)" >&2
+    echo "agentmemory: viewer proxy skipped (no NIC or container IP)" >&2
     return 1
   fi
   socat "TCP-LISTEN:${VIEWER_PORT},bind=${BIND_IP},fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &

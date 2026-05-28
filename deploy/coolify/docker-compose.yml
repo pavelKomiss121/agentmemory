@@ -12,8 +12,10 @@ services:
       SERVICE_FQDN_AGENTMEMORY_3111: ${SERVICE_FQDN_AGENTMEMORY_3111}
       SERVICE_FQDN_AGENTMEMORY_3113: ${SERVICE_FQDN_AGENTMEMORY_3113}
       AGENTMEMORY_TOOLS: all
-      VIEWER_ALLOWED_HOSTS: ${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.shop}
+      VIEWER_ALLOWED_HOSTS: ${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.shop,memory-viewer.domenpashin.shop:443}
       VIEWER_ALLOWED_ORIGINS: ${VIEWER_ALLOWED_ORIGINS:-https://memory-viewer.domenpashin.shop,https://memory.domenpashin.shop}
+    cap_add:
+      - NET_RAW
     expose:
       - "3111"
       - "3113"

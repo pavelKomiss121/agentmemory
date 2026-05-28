@@ -6,30 +6,29 @@ services:
     container_name: agentmemory
     restart: unless-stopped
     command: >
-      sh -c "npm install -g @agentmemory/agentmemory@latest &&
-             agentmemory"
+      sh -c "
+        rm -rf /usr/local/lib/node_modules/@agentmemory && 
+        npm install -g --force @agentmemory/agentmemory@latest &&
+        agentmemory
+      "
     ports:
-      - "3111:3111"   # Основной API (обязательно)
-      - "3113:3113"   # Viewer (можно оставить или убрать)
-      - "3112:3112"   # Streams
+      - "3111:3111"
+      - "3113:3113"
+      - "3112:3112"
     volumes:
       - agentmemory_data:/root/.agentmemory
       - agentmemory_iii:/data
     environment:
-      - AGENTMEMORY_SECRET=${AGENTMEMORY_SECRET:-superlongrandomsecret1234567890}
+      - AGENTMEMORY_SECRET=твой_очень_длинный_секрет_минимум_32_символа
       - NODE_ENV=production
       - AGENTMEMORY_HOST=0.0.0.0
-      # Добавь позже, если нужно:
-      # - ANTHROPIC_API_KEY=...
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3111/agentmemory/health"]
-      interval: 20s
+      interval: 15s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 8
+      start_period: 40s
 
 volumes:
   agentmemory_data:
-    name: agentmemory_data
   agentmemory_iii:
-    name: agentmemory_iii

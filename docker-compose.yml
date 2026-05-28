@@ -2,30 +2,34 @@ version: '3.8'
 
 services:
   agentmemory:
-    image: node:20-slim
+    image: node:20-alpine
     container_name: agentmemory
     restart: unless-stopped
     command: >
-      sh -c "npm install -g @agentmemory/agentmemory && 
+      sh -c "npm install -g @agentmemory/agentmemory@latest &&
              agentmemory"
     ports:
-      - "3111:3111"    # Основной API
-      - "3113:3113"    # Viewer (можно убрать или оставить только локально)
-      - "3112:3112"    # Streams
+      - "3111:3111"   # Основной API (обязательно)
+      - "3113:3113"   # Viewer (можно оставить или убрать)
+      - "3112:3112"   # Streams
     volumes:
       - agentmemory_data:/root/.agentmemory
-      - agentmemory_iii:/data               # Важно для iii-engine
+      - agentmemory_iii:/data
     environment:
-      - AGENTMEMORY_SECRET=твой_очень_длинный_секрет_здесь
+      - AGENTMEMORY_SECRET=${AGENTMEMORY_SECRET:-superlongrandomsecret1234567890}
       - NODE_ENV=production
-      # При желании добавь LLM-ключи позже:
+      - AGENTMEMORY_HOST=0.0.0.0
+      # Добавь позже, если нужно:
       # - ANTHROPIC_API_KEY=...
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3111/agentmemory/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   agentmemory_data:
+    name: agentmemory_data
   agentmemory_iii:
+    name: agentmemory_iii

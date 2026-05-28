@@ -107,8 +107,23 @@ start_viewer_proxy() {
     fi
     sleep 1
   done
-  socat "TCP-LISTEN:${VIEWER_PORT},bind=0.0.0.0,fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
-  echo "agentmemory: viewer proxy listening on 0.0.0.0:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
+  # Viewer binds 127.0.0.1:3113, so 0.0.0.0:3113 conflicts (EADDRINUSE).
+  # Bind socat to the container's Docker-network IP instead.
+  BIND_IP="${AGENTMEMORY_VIEWER_BIND_IP:-}"
+  if [ -z "$BIND_IP" ]; then
+    for ip in $(hostname -I 2>/dev/null); do
+      case "$ip" in
+        127.*|::*) ;;
+        *) BIND_IP="$ip"; break ;;
+      esac
+    done
+  fi
+  if [ -z "$BIND_IP" ]; then
+    echo "agentmemory: viewer proxy skipped (could not resolve container IP)" >&2
+    return 1
+  fi
+  socat "TCP-LISTEN:${VIEWER_PORT},bind=${BIND_IP},fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
+  echo "agentmemory: viewer proxy listening on ${BIND_IP}:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
 }
 
 gosu "$RUN_AS" agentmemory "$@" &

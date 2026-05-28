@@ -4,38 +4,23 @@ services:
     container_name: agentmemory
     restart: unless-stopped
 
+    network_mode: host
+
     command: >
       bash -c "
         npm install -g --force @agentmemory/agentmemory@latest &&
-        export HOST=0.0.0.0 &&
-        export AGENTMEMORY_HOST=0.0.0.0 &&
-        export AGENTMEMORY_USE_DOCKER=1 &&
-        agentmemory --port 3111
+        AGENTMEMORY_USE_DOCKER=1 agentmemory --port 3111
       "
-
-    ports:
-      - "3111:3111"
-      - "3112:3112"
-      - "3113:3113"
 
     environment:
       NODE_ENV: production
-      HOST: 0.0.0.0
-      AGENTMEMORY_HOST: 0.0.0.0
       AGENTMEMORY_USE_DOCKER: "1"
-      AGENTMEMORY_SECRET: "замени_на_длинный_секрет_минимум_32_символа"
+      AGENTMEMORY_SECRET: "замени_на_длинный_секрет"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - agentmemory_data:/root/.agentmemory
       - agentmemory_iii:/data
-
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3111 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
 
 volumes:
   agentmemory_data:

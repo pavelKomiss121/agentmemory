@@ -4,13 +4,23 @@ services:
     container_name: agentmemory
     restart: unless-stopped
 
-    network_mode: host
-
     command: >
       bash -c "
+        apt update &&
+        apt install -y socat &&
         npm install -g --force @agentmemory/agentmemory@latest &&
-        AGENTMEMORY_USE_DOCKER=1 agentmemory --port 3111
+        AGENTMEMORY_USE_DOCKER=1 agentmemory --port 3111 &
+        sleep 15 &&
+        socat TCP-LISTEN:3111,fork,reuseaddr TCP:127.0.0.1:3111 &
+        socat TCP-LISTEN:3112,fork,reuseaddr TCP:127.0.0.1:3112 &
+        socat TCP-LISTEN:3113,fork,reuseaddr TCP:127.0.0.1:3113 &&
+        wait
       "
+
+    ports:
+      - "3111:3111"
+      - "3112:3112"
+      - "3113:3113"
 
     environment:
       NODE_ENV: production

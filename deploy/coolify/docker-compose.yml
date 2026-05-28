@@ -10,9 +10,13 @@ services:
     restart: unless-stopped
     environment:
       SERVICE_FQDN_AGENTMEMORY_3111: ${SERVICE_FQDN_AGENTMEMORY_3111}
+      SERVICE_FQDN_AGENTMEMORY_3113: ${SERVICE_FQDN_AGENTMEMORY_3113}
       AGENTMEMORY_TOOLS: all
+      VIEWER_ALLOWED_HOSTS: ${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.shop}
+      VIEWER_ALLOWED_ORIGINS: ${VIEWER_ALLOWED_ORIGINS:-https://memory-viewer.domenpashin.shop,https://memory.domenpashin.shop}
     expose:
       - "3111"
+      - "3113"
     volumes:
       - agentmemory-data:/data
     healthcheck:

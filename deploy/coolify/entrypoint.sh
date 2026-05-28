@@ -95,4 +95,23 @@ fi
 AGENTMEMORY_SECRET="$(cat "$HMAC_FILE")"
 export AGENTMEMORY_SECRET
 
-exec gosu "$RUN_AS" agentmemory "$@"
+VIEWER_PORT="${AGENTMEMORY_VIEWER_PORT:-3113}"
+
+start_viewer_proxy() {
+  if [ "${AGENTMEMORY_VIEWER_PROXY:-1}" = "0" ]; then
+    return 0
+  fi
+  for _ in $(seq 1 60); do
+    if curl -fsS "http://127.0.0.1:${VIEWER_PORT}/favicon.svg" >/dev/null 2>&1; then
+      break
+    fi
+    sleep 1
+  done
+  socat "TCP-LISTEN:${VIEWER_PORT},bind=0.0.0.0,fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
+  echo "agentmemory: viewer proxy listening on 0.0.0.0:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
+}
+
+gosu "$RUN_AS" agentmemory "$@" &
+AM_PID=$!
+start_viewer_proxy
+wait "$AM_PID"

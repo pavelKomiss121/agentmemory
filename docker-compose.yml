@@ -1,33 +1,30 @@
-version: '3.8'
-
 services:
   agentmemory:
-    image: node:20-alpine
+    image: node:20
     container_name: agentmemory
     restart: unless-stopped
+
     command: >
-      sh -c "
-        rm -rf /usr/local/lib/node_modules/@agentmemory && 
+      bash -c "
         npm install -g --force @agentmemory/agentmemory@latest &&
-        agentmemory
+        AGENTMEMORY_USE_DOCKER=1 agentmemory
       "
+
     ports:
       - "3111:3111"
-      - "3113:3113"
       - "3112:3112"
+      - "3113:3113"
+
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - agentmemory_data:/root/.agentmemory
       - agentmemory_iii:/data
+
     environment:
-      - AGENTMEMORY_SECRET=твой_очень_длинный_секрет_минимум_32_символа
+      - AGENTMEMORY_SECRET=твoй_секрет_32_символа
       - NODE_ENV=production
       - AGENTMEMORY_HOST=0.0.0.0
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3111/agentmemory/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 8
-      start_period: 40s
+      - AGENTMEMORY_USE_DOCKER=1
 
 volumes:
   agentmemory_data:

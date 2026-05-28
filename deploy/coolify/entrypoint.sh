@@ -98,52 +98,19 @@ export VIEWER_ALLOWED_HOSTS="${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.s
 export VIEWER_ALLOWED_ORIGINS="${VIEWER_ALLOWED_ORIGINS:-https://memory-viewer.domenpashin.shop,https://memory.domenpashin.shop}"
 
 VIEWER_PORT="${AGENTMEMORY_VIEWER_PORT:-3113}"
+VIEWER_INTERNAL_PORT="${AGENTMEMORY_VIEWER_INTERNAL_PORT:-$((VIEWER_PORT + 1))}"
 
 start_viewer_proxy() {
   if [ "${AGENTMEMORY_VIEWER_PROXY:-1}" = "0" ]; then
     return 0
   fi
-  for _ in $(seq 1 60); do
-    if curl -fsS "http://127.0.0.1:${VIEWER_PORT}/favicon.svg" >/dev/null 2>&1; then
-      break
-    fi
-    sleep 1
-  done
-  # Viewer binds 127.0.0.1:3113. Binding socat to 0.0.0.0:3113 conflicts
-  # (EADDRINUSE). Use SO_BINDTODEVICE on the container NIC instead so Traefik
-  # can reach the port on the Docker network without touching loopback.
-  IFACE="${AGENTMEMORY_VIEWER_BIND_IFACE:-}"
-  if [ -z "$IFACE" ]; then
-    for n in $(ls /sys/class/net 2>/dev/null); do
-      case "$n" in
-        lo|docker*|br-*|veth*) ;;
-        *) IFACE="$n"; break ;;
-      esac
-    done
-  fi
-  if [ -n "$IFACE" ]; then
-    socat "TCP-LISTEN:${VIEWER_PORT},bindtodevice=${IFACE},fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
-    echo "agentmemory: viewer proxy listening on ${IFACE}:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
-    return 0
-  fi
-  BIND_IP="${AGENTMEMORY_VIEWER_BIND_IP:-}"
-  if [ -z "$BIND_IP" ]; then
-    for ip in $(hostname -I 2>/dev/null); do
-      case "$ip" in
-        127.*|::*) ;;
-        *) BIND_IP="$ip"; break ;;
-      esac
-    done
-  fi
-  if [ -z "$BIND_IP" ]; then
-    echo "agentmemory: viewer proxy skipped (no NIC or container IP)" >&2
-    return 1
-  fi
-  socat "TCP-LISTEN:${VIEWER_PORT},bind=${BIND_IP},fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_PORT}" &
-  echo "agentmemory: viewer proxy listening on ${BIND_IP}:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_PORT}"
+  # Claim the public port before agentmemory starts. The viewer defaults to
+  # 127.0.0.1:3113; with 3113 taken it auto-falls back to 3114 on loopback.
+  socat "TCP-LISTEN:${VIEWER_PORT},bind=0.0.0.0,fork,reuseaddr" "TCP:127.0.0.1:${VIEWER_INTERNAL_PORT}" &
+  echo "agentmemory: viewer proxy listening on 0.0.0.0:${VIEWER_PORT} -> 127.0.0.1:${VIEWER_INTERNAL_PORT}"
 }
 
+start_viewer_proxy
 gosu "$RUN_AS" agentmemory "$@" &
 AM_PID=$!
-start_viewer_proxy
 wait "$AM_PID"

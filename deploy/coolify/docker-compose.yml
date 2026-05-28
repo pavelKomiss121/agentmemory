@@ -14,6 +14,24 @@ services:
       AGENTMEMORY_TOOLS: all
       VIEWER_ALLOWED_HOSTS: ${VIEWER_ALLOWED_HOSTS:-memory-viewer.domenpashin.shop,memory-viewer.domenpashin.shop:443}
       VIEWER_ALLOWED_ORIGINS: ${VIEWER_ALLOWED_ORIGINS:-https://memory-viewer.domenpashin.shop,https://memory.domenpashin.shop}
+      # Pass Dokploy/Coolify UI secrets through to the container (required —
+      # vars set only in the dashboard are not injected unless listed here).
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_API_KEY_FOR_LLM: ${OPENAI_API_KEY_FOR_LLM:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
+      VOYAGE_API_KEY: ${VOYAGE_API_KEY:-}
+      COHERE_API_KEY: ${COHERE_API_KEY:-}
+      OLLAMA_HOST: ${OLLAMA_HOST:-}
+      GRAPH_EXTRACTION_ENABLED: ${GRAPH_EXTRACTION_ENABLED:-false}
+      CONSOLIDATION_ENABLED: ${CONSOLIDATION_ENABLED:-}
+      AGENTMEMORY_AUTO_COMPRESS: ${AGENTMEMORY_AUTO_COMPRESS:-}
+      AGENTMEMORY_INJECT_CONTEXT: ${AGENTMEMORY_INJECT_CONTEXT:-}
     expose:
       - "3111"
       - "3113"

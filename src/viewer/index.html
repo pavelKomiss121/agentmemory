@@ -936,30 +936,31 @@
 </head>
 <body>
   <div class="app-header">
-    <a class="brand" href="#dashboard" data-tab-link="dashboard" aria-label="Open dashboard">
+    <a class="brand" href="#dashboard" data-tab-link="dashboard" data-i18n-aria="brand_aria" aria-label="Open dashboard">
       <h1>agentmemory</h1>
       <span class="version">v__AGENTMEMORY_VERSION__</span>
     </a>
     <div class="header-right">
       <span class="dateline" id="dateline"></span>
-      <button id="theme-toggle" class="btn" style="font-size:9px;padding:3px 10px;letter-spacing:0.1em;margin-right:8px;" data-action="toggle-theme">DARK</button>
-      <span id="ws-status" class="ws-status disconnected">live updates off</span>
+      <button id="lang-toggle" class="btn" style="font-size:9px;padding:3px 10px;letter-spacing:0.1em;margin-right:8px;" data-action="toggle-locale" title="Language">RU</button>
+      <button id="theme-toggle" class="btn" style="font-size:9px;padding:3px 10px;letter-spacing:0.1em;margin-right:8px;" data-action="toggle-theme" data-i18n="theme_dark">DARK</button>
+      <span id="ws-status" class="ws-status disconnected" data-i18n="ws_off">live updates off</span>
     </div>
   </div>
 
   <div class="tab-bar" id="tab-bar">
-    <button class="active" data-tab="dashboard" aria-current="page">Dashboard</button>
-    <button data-tab="graph">Graph</button>
-    <button data-tab="memories">Memories</button>
-    <button data-tab="timeline">Timeline</button>
-    <button data-tab="sessions">Sessions</button>
-    <button data-tab="lessons">Lessons</button>
-    <button data-tab="actions">Actions</button>
-    <button data-tab="crystals">Crystals</button>
-    <button data-tab="audit">Audit</button>
-    <button data-tab="activity">Activity</button>
-    <button data-tab="profile">Profile</button>
-    <button data-tab="replay">Replay</button>
+    <button class="active" data-tab="dashboard" aria-current="page" data-i18n="tab_dashboard">Dashboard</button>
+    <button data-tab="graph" data-i18n="tab_graph">Graph</button>
+    <button data-tab="memories" data-i18n="tab_memories">Memories</button>
+    <button data-tab="timeline" data-i18n="tab_timeline">Timeline</button>
+    <button data-tab="sessions" data-i18n="tab_sessions">Sessions</button>
+    <button data-tab="lessons" data-i18n="tab_lessons">Lessons</button>
+    <button data-tab="actions" data-i18n="tab_actions">Actions</button>
+    <button data-tab="crystals" data-i18n="tab_crystals">Crystals</button>
+    <button data-tab="audit" data-i18n="tab_audit">Audit</button>
+    <button data-tab="activity" data-i18n="tab_activity">Activity</button>
+    <button data-tab="profile" data-i18n="tab_profile">Profile</button>
+    <button data-tab="replay" data-i18n="tab_replay">Replay</button>
   </div>
 
   <div id="flag-banners" class="flag-banners"></div>
@@ -982,7 +983,7 @@
   </div>
 
   <footer id="viewer-footer" class="viewer-footer">
-    <span>agentmemory viewer · <span id="footer-version">loading...</span></span>
+    <span><span data-i18n="footer_viewer">agentmemory viewer</span> · <span id="footer-version" data-i18n="footer_loading">loading...</span></span>
     <span class="footer-sep">·</span>
     <a href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener">github</a>
     <span class="footer-sep">·</span>
@@ -992,6 +993,124 @@
   </footer>
 
   <script nonce="__AGENTMEMORY_VIEWER_NONCE__">
+    var I18N_STRINGS = {
+      en: {
+        tab_dashboard: 'Dashboard', tab_graph: 'Graph', tab_memories: 'Memories',
+        tab_timeline: 'Timeline', tab_sessions: 'Sessions', tab_lessons: 'Lessons',
+        tab_actions: 'Actions', tab_crystals: 'Crystals', tab_audit: 'Audit',
+        tab_activity: 'Activity', tab_profile: 'Profile', tab_replay: 'Replay',
+        brand_aria: 'Open dashboard', theme_dark: 'DARK', theme_light: 'LIGHT',
+        ws_live: 'live updates on', ws_live_short: 'live', ws_off: 'live updates off',
+        ws_polling: 'polling · {n}s', ws_connecting: 'connecting...',
+        footer_viewer: 'agentmemory viewer', footer_loading: 'loading...',
+        footer_report: 'report issue →', footer_flags: 'Feature flags',
+        flags_off: '{n} off', flags_note: '{n} note', flags_expand: 'expand', flags_collapse: 'collapse',
+        flags_learn: 'Learn more →', flags_dismiss: 'Dismiss',
+        stat_sessions: 'Sessions', stat_active: '{n} active', stat_memories: 'Memories',
+        stat_latest: 'latest versions', stat_lessons: 'Lessons', stat_confidence: 'confidence-scored',
+        stat_crystals: 'Crystals', stat_digests: 'action digests', stat_graph_nodes: 'Graph Nodes',
+        stat_edges: '{n} edges', stat_health: 'Health', stat_fn_calls: 'Function Calls',
+        stat_fn_tracked: '{n} functions tracked', stat_cb: 'Circuit Breaker', stat_failures: '{n} failures',
+        stat_token_savings: 'Token Savings', stat_saved: '~{tokens} tokens · {cost} saved',
+        card_system: 'System Resources', card_recent_sessions: 'Recent Sessions',
+        card_recent_activity: 'Recent Activity', card_alerts: 'Alerts ({n})', card_notes: 'Notes ({n})',
+        th_project: 'Project', th_status: 'Status', th_obs: 'Obs', th_started: 'Started',
+        empty_sessions: 'No sessions yet. Start a coding session with agentmemory hooks enabled.',
+        empty_activity: 'No activity recorded yet',
+        loading_dashboard: 'Loading dashboard...', loading_memories: 'Loading memories...',
+        loading_timeline: 'Loading timeline...', loading_sessions: 'Loading sessions...',
+        loading_activity: 'Loading activity...', loading_lessons: 'Loading lessons...',
+        loading_actions: 'Loading actions...', loading_crystals: 'Loading crystals...',
+        loading_audit: 'Loading audit log...', loading_profile: 'Loading profile...',
+        loading_observations: 'Loading observations...',
+        loading_session_details: 'Loading session details…',
+        loading_profile_data: 'Loading profile data...',
+        loading_replay: 'Loading replay…',
+        importing_jsonl: 'Importing JSONL…',
+        dashboard_error: 'Dashboard failed to load: {msg}. Check the browser console and verify the REST API is reachable.',
+        hero_badge: 'First run → magical moment in 10 seconds',
+        hero_title: 'Seed sample data + prove semantic recall works',
+        hero_body: 'agentmemory is running but hasn\'t seen any sessions yet. Run the demo command in a second terminal: it seeds 3 realistic coding sessions and proves the hybrid search finds semantically-related memories that keyword search would miss.',
+        hero_link: 'Or: wire up your real agent →',
+        flag_provider_title: 'No LLM provider key set',
+        flag_provider_desc: 'Compression, summarization, and graph extraction stay disabled until a key is provided.',
+        flag_bm25_title: 'Running in BM25-only mode',
+        flag_bm25_desc: 'Semantic vector search is off. BM25 keyword search is active and good for exact matches.',
+        flag_needs_llm: ' Requires an LLM provider key (ANTHROPIC_API_KEY, GEMINI_API_KEY, etc.).',
+        flag_GRAPH_EXTRACTION_ENABLED: 'Knowledge graph extraction',
+        flag_CONSOLIDATION_ENABLED: 'Memory consolidation',
+        flag_AGENTMEMORY_AUTO_COMPRESS: 'LLM-powered observation compression',
+        flag_AGENTMEMORY_INJECT_CONTEXT: 'In-conversation context injection'
+      },
+      ru: {
+        tab_dashboard: 'Панель', tab_graph: 'Граф', tab_memories: 'Память',
+        tab_timeline: 'Хронология', tab_sessions: 'Сессии', tab_lessons: 'Уроки',
+        tab_actions: 'Действия', tab_crystals: 'Кристаллы', tab_audit: 'Аудит',
+        tab_activity: 'Активность', tab_profile: 'Профиль', tab_replay: 'Повтор',
+        brand_aria: 'Открыть панель', theme_dark: 'ТЁМН.', theme_light: 'СВЕТ.',
+        ws_live: 'обновления в реальном времени', ws_live_short: 'онлайн', ws_off: 'live выкл.',
+        ws_polling: 'опрос · {n}с', ws_connecting: 'подключение...',
+        footer_viewer: 'agentmemory viewer', footer_loading: 'загрузка...',
+        footer_report: 'сообщить об ошибке →', footer_flags: 'Флаги функций',
+        flags_off: '{n} выкл.', flags_note: '{n} замет.', flags_expand: 'развернуть', flags_collapse: 'свернуть',
+        flags_learn: 'Подробнее →', flags_dismiss: 'Закрыть',
+        stat_sessions: 'Сессии', stat_active: '{n} активных', stat_memories: 'Воспоминания',
+        stat_latest: 'последние версии', stat_lessons: 'Уроки', stat_confidence: 'с оценкой уверенности',
+        stat_crystals: 'Кристаллы', stat_digests: 'сводки действий', stat_graph_nodes: 'Узлы графа',
+        stat_edges: '{n} рёбер', stat_health: 'Статус', stat_fn_calls: 'Вызовы функций',
+        stat_fn_tracked: '{n} функций', stat_cb: 'Автовыключатель', stat_failures: '{n} сбоев',
+        stat_token_savings: 'Экономия токенов', stat_saved: '~{tokens} токенов · {cost} сэкономлено',
+        card_system: 'Системные ресурсы', card_recent_sessions: 'Недавние сессии',
+        card_recent_activity: 'Недавняя активность', card_alerts: 'Предупреждения ({n})', card_notes: 'Заметки ({n})',
+        th_project: 'Проект', th_status: 'Статус', th_obs: 'Набл.', th_started: 'Начало',
+        empty_sessions: 'Сессий пока нет. Запустите coding session с включёнными hooks agentmemory.',
+        empty_activity: 'Активности пока нет',
+        loading_dashboard: 'Загрузка панели...', loading_memories: 'Загрузка памяти...',
+        loading_timeline: 'Загрузка хронологии...', loading_sessions: 'Загрузка сессий...',
+        loading_activity: 'Загрузка активности...', loading_lessons: 'Загрузка уроков...',
+        loading_actions: 'Загрузка действий...', loading_crystals: 'Загрузка кристаллов...',
+        loading_audit: 'Загрузка журнала аудита...', loading_profile: 'Загрузка профиля...',
+        loading_observations: 'Загрузка наблюдений...',
+        loading_session_details: 'Загрузка деталей сессии…',
+        loading_profile_data: 'Загрузка данных профиля...',
+        loading_replay: 'Загрузка повтора…',
+        importing_jsonl: 'Импорт JSONL…',
+        dashboard_error: 'Не удалось загрузить панель: {msg}. Проверьте консоль браузера и доступность REST API.',
+        hero_badge: 'Первый запуск → результат за 10 секунд',
+        hero_title: 'Демо-данные + проверка семантического поиска',
+        hero_body: 'agentmemory запущен, но сессий ещё не было. В другом терминале выполните demo: создаст 3 сессии и покажет, что гибридный поиск находит связанные воспоминания лучше, чем поиск по ключевым словам.',
+        hero_link: 'Или: подключите своего агента →',
+        flag_provider_title: 'LLM-ключ не задан',
+        flag_provider_desc: 'Сжатие, суммаризация и граф знаний отключены, пока не указан API-ключ.',
+        flag_bm25_title: 'Режим только BM25',
+        flag_bm25_desc: 'Семантический векторный поиск выключен. Активен BM25 — хорош для точных совпадений.',
+        flag_needs_llm: ' Требуется LLM-ключ (ANTHROPIC_API_KEY, GEMINI_API_KEY и т.д.).',
+        flag_GRAPH_EXTRACTION_ENABLED: 'Извлечение графа знаний',
+        flag_CONSOLIDATION_ENABLED: 'Консолидация памяти',
+        flag_AGENTMEMORY_AUTO_COMPRESS: 'LLM-сжатие наблюдений',
+        flag_AGENTMEMORY_INJECT_CONTEXT: 'Вставка контекста в диалог'
+      }
+    };
+    var viewerLocale = (function() {
+      var q = new URLSearchParams(window.location.search).get('lang');
+      if (q === 'ru' || q === 'en') return q;
+      var stored = localStorage.getItem('agentmemory-locale');
+      if (stored === 'ru' || stored === 'en') return stored;
+      var nav = (navigator.language || '').toLowerCase();
+      return nav.indexOf('ru') === 0 ? 'ru' : 'en';
+    })();
+    function t(key, vars) {
+      var str = (I18N_STRINGS[viewerLocale] && I18N_STRINGS[viewerLocale][key])
+        || (I18N_STRINGS.en && I18N_STRINGS.en[key])
+        || key;
+      if (vars) {
+        Object.keys(vars).forEach(function(k) {
+          str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), String(vars[k]));
+        });
+      }
+      return str;
+    }
+
     var params = new URLSearchParams(window.location.search);
     var paramPort = params.get('port');
     var locPort = window.location.port;
@@ -1019,13 +1138,13 @@
     }
 
     var dateEl = document.getElementById('dateline');
-    if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString(viewerLocale === 'ru' ? 'ru-RU' : 'en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
 
     function isDarkMode() { return document.documentElement.dataset.theme === 'dark'; }
     function applyTheme(dark, persist) {
       document.documentElement.dataset.theme = dark ? 'dark' : 'light';
       var btn = document.getElementById('theme-toggle');
-      if (btn) btn.textContent = dark ? 'LIGHT' : 'DARK';
+      if (btn) btn.textContent = dark ? t('theme_light') : t('theme_dark');
       if (persist) localStorage.setItem('agentmemory-theme', dark ? 'dark' : 'light');
     }
     window.toggleTheme = function() { applyTheme(!isDarkMode(), true); };
@@ -1262,7 +1381,7 @@
 
     async function loadDashboard() {
       var el = document.getElementById('view-dashboard');
-      el.innerHTML = '<div class="loading">Loading dashboard...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_dashboard')) + '</div>';
       try {
         var results = await Promise.all([
           apiGet('health'),
@@ -1300,7 +1419,7 @@
         console.error('[viewer] loadDashboard failed:', err);
         el.innerHTML =
           '<div class="loading" style="color:var(--accent);">' +
-          'Dashboard failed to load: ' + msg +
+          t('dashboard_error', { msg: msg }) +
           '<br><br><span style="font-size:12px;color:var(--ink-muted);">' +
           'Check the browser console for the full error. If you see CSP ' +
           'violations, please open an issue with the agentmemory version ' +
@@ -1328,29 +1447,29 @@
       // First-run hero: empty dashboard = guided next step
       if (d.sessions.length === 0) {
         html += '<div class="card" style="margin-bottom:14px;padding:24px 28px;background:var(--bg-subtle);border-left:3px solid var(--accent);">' +
-          '<div style="font-family:var(--font-ui);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px;">First run &rarr; magical moment in 10 seconds</div>' +
-          '<div style="font-family:var(--font-display,Lora,Georgia,serif);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px;">Seed sample data + prove semantic recall works</div>' +
-          '<div style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;line-height:1.5;max-width:640px;">agentmemory is running but hasn&rsquo;t seen any sessions yet. Run the demo command in a second terminal: it seeds 3 realistic coding sessions and proves the hybrid search finds semantically-related memories that keyword search would miss.</div>' +
+          '<div style="font-family:var(--font-ui);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px;">' + esc(t('hero_badge')) + '</div>' +
+          '<div style="font-family:var(--font-display,Lora,Georgia,serif);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:8px;">' + esc(t('hero_title')) + '</div>' +
+          '<div style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;line-height:1.5;max-width:640px;">' + esc(t('hero_body')) + '</div>' +
           '<pre style="display:inline-block;margin:0;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:4px;font-family:var(--font-mono);font-size:12px;color:var(--ink);">npx @agentmemory/agentmemory demo</pre>' +
-          '<div style="margin-top:10px;"><a class="empty-link" href="https://github.com/rohitg00/agentmemory#quick-start" target="_blank" rel="noopener" style="font-size:12px;">Or: wire up your real agent &rarr;</a></div>' +
+          '<div style="margin-top:10px;"><a class="empty-link" href="https://github.com/rohitg00/agentmemory#quick-start" target="_blank" rel="noopener" style="font-size:12px;">' + esc(t('hero_link')) + '</a></div>' +
           '</div>';
       }
       html += '<div class="stats-grid">';
-      html += '<div class="stat-card"><div class="label">Sessions</div><div class="value">' + d.sessions.length + '</div><div class="sub">' + activeSessions + ' active</div></div>';
-      html += '<div class="stat-card"><div class="label">Memories</div><div class="value">' + d.memories.length + '</div><div class="sub">latest versions</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_sessions')) + '</div><div class="value">' + d.sessions.length + '</div><div class="sub">' + esc(t('stat_active', { n: activeSessions })) + '</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_memories')) + '</div><div class="value">' + d.memories.length + '</div><div class="sub">' + esc(t('stat_latest')) + '</div></div>';
       var lessonCount = (d.lessons || []).length;
       var crystalCount = (d.crystals || []).length;
-      html += '<div class="stat-card"><div class="label">Lessons</div><div class="value">' + lessonCount + '</div><div class="sub">confidence-scored</div></div>';
-      html += '<div class="stat-card"><div class="label">Crystals</div><div class="value">' + crystalCount + '</div><div class="sub">action digests</div></div>';
-      html += '<div class="stat-card"><div class="label">Graph Nodes</div><div class="value">' + nodeCount + '</div><div class="sub">' + edgeCount + ' edges</div></div>';
-      html += '<div class="stat-card"><div class="label">Health</div><div class="value"><div class="health-bar"><span class="health-dot ' + dotClass + '"></span> ' + esc(healthStatus) + '</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_lessons')) + '</div><div class="value">' + lessonCount + '</div><div class="sub">' + esc(t('stat_confidence')) + '</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_crystals')) + '</div><div class="value">' + crystalCount + '</div><div class="sub">' + esc(t('stat_digests')) + '</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_graph_nodes')) + '</div><div class="value">' + nodeCount + '</div><div class="sub">' + esc(t('stat_edges', { n: edgeCount })) + '</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_health')) + '</div><div class="value"><div class="health-bar"><span class="health-dot ' + dotClass + '"></span> ' + esc(healthStatus) + '</div></div>';
       html += '<div class="sub">' + esc(snap.connectionState || 'unknown') + '</div></div>';
       var totalCalls = fMetrics.reduce(function(a, m) { return a + (m.totalCalls || 0); }, 0);
-      html += '<div class="stat-card"><div class="label">Function Calls</div><div class="value">' + totalCalls + '</div><div class="sub">' + fMetrics.length + ' functions tracked</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_fn_calls')) + '</div><div class="value">' + totalCalls + '</div><div class="sub">' + esc(t('stat_fn_tracked', { n: fMetrics.length })) + '</div></div>';
       if (cb) {
         var cbClass = cb.state === 'closed' ? 'cb-closed' : cb.state === 'open' ? 'cb-open' : 'cb-half-open';
-        html += '<div class="stat-card"><div class="label">Circuit Breaker</div><div class="value"><span class="cb-indicator ' + cbClass + '">' + esc(cb.state) + '</span></div>';
-        html += '<div class="sub">' + (cb.failures || 0) + ' failures</div></div>';
+        html += '<div class="stat-card"><div class="label">' + esc(t('stat_cb')) + '</div><div class="value"><span class="cb-indicator ' + cbClass + '">' + esc(cb.state) + '</span></div>';
+        html += '<div class="sub">' + esc(t('stat_failures', { n: cb.failures || 0 })) + '</div></div>';
       }
       var totalObs = d.sessions.reduce(function(a, s) { return a + (s.observationCount || 0); }, 0);
       var tokenBudget = parseInt(new URLSearchParams(window.location.search).get('tokenBudget') || '2000', 10) || 2000;
@@ -1363,11 +1482,11 @@
       var costDollars = tokensSaved / 1000 * 0.3;
       var costCents = Math.round(costDollars * 100);
       var costStr = costCents >= 100 ? '$' + (costCents / 100).toFixed(2) : costCents + 'ct';
-      html += '<div class="stat-card"><div class="label">Token Savings</div><div class="value">' + savings + '%</div><div class="sub">~' + tokensSaved.toLocaleString() + ' tokens · ' + costStr + ' saved</div></div>';
+      html += '<div class="stat-card"><div class="label">' + esc(t('stat_token_savings')) + '</div><div class="value">' + savings + '%</div><div class="sub">' + esc(t('stat_saved', { tokens: tokensSaved.toLocaleString(), cost: costStr })) + '</div></div>';
       html += '</div>';
 
       if (snap.memory || snap.cpu) {
-        html += '<div class="card" style="margin-bottom:16px"><div class="card-title">System Resources</div>';
+        html += '<div class="card" style="margin-bottom:16px"><div class="card-title">' + esc(t('card_system')) + '</div>';
         if (snap.memory) {
           var heapUsed = Math.round((snap.memory.heapUsed || 0) / 1024 / 1024);
           var heapTotal = Math.round((snap.memory.heapTotal || 0) / 1024 / 1024);
@@ -1402,7 +1521,7 @@
       }
 
       if (snap.alerts && snap.alerts.length > 0) {
-        html += '<div class="card" style="margin-bottom:16px;border-color:var(--accent);border-width:2px;"><div class="card-title" style="color:var(--accent);border-bottom-color:var(--accent);">Alerts (' + snap.alerts.length + ')</div>';
+        html += '<div class="card" style="margin-bottom:16px;border-color:var(--accent);border-width:2px;"><div class="card-title" style="color:var(--accent);border-bottom-color:var(--accent);">' + esc(t('card_alerts', { n: snap.alerts.length })) + '</div>';
         snap.alerts.forEach(function(al) {
           html += '<div style="font-size:12px;color:var(--accent);padding:4px 0;border-bottom:1px solid var(--border-light);font-family:var(--font-ui);">' + esc(al) + '</div>';
         });
@@ -1410,7 +1529,7 @@
       }
 
       if (snap.notes && snap.notes.length > 0) {
-        html += '<div class="card" style="margin-bottom:16px;"><div class="card-title" style="color:var(--ink-muted);">Notes (' + snap.notes.length + ')</div>';
+        html += '<div class="card" style="margin-bottom:16px;"><div class="card-title" style="color:var(--ink-muted);">' + esc(t('card_notes', { n: snap.notes.length })) + '</div>';
         snap.notes.forEach(function(n) {
           html += '<div style="font-size:12px;color:var(--ink-muted);padding:4px 0;border-bottom:1px solid var(--border-light);font-family:var(--font-ui);">' + esc(n) + '</div>';
         });
@@ -1419,12 +1538,12 @@
 
       html += '<div class="two-col">';
 
-      html += '<div class="card"><div class="card-title">Recent Sessions</div>';
+      html += '<div class="card"><div class="card-title">' + esc(t('card_recent_sessions')) + '</div>';
       if (d.sessions.length === 0) {
-        html += '<div class="empty-state"><p>No sessions yet. Start a coding session with agentmemory hooks enabled.</p></div>';
+        html += '<div class="empty-state"><p>' + esc(t('empty_sessions')) + '</p></div>';
       } else {
         var recent = d.sessions.slice().sort(function(a, b) { return (b.startedAt || '').localeCompare(a.startedAt || ''); }).slice(0, 5);
-        html += '<table><tr><th>Project</th><th>Status</th><th>Obs</th><th>Started</th></tr>';
+        html += '<table><tr><th>' + esc(t('th_project')) + '</th><th>' + esc(t('th_status')) + '</th><th>' + esc(t('th_obs')) + '</th><th>' + esc(t('th_started')) + '</th></tr>';
         recent.forEach(function(s) {
           var statusBadge = s.status === 'active' ? 'badge-green' : s.status === 'completed' ? 'badge-blue' : 'badge-muted';
           html += '<tr><td style="color:var(--ink);font-weight:500;">' + esc(sessionDisplayName(s)) + '</td>';
@@ -1436,9 +1555,9 @@
       }
       html += '</div>';
 
-      html += '<div class="card"><div class="card-title">Recent Activity</div>';
+      html += '<div class="card"><div class="card-title">' + esc(t('card_recent_activity')) + '</div>';
       if (d.recentAudit.length === 0) {
-        html += '<div class="empty-state"><p>No activity recorded yet</p></div>';
+        html += '<div class="empty-state"><p>' + esc(t('empty_activity')) + '</p></div>';
       } else {
         d.recentAudit.forEach(function(a) {
           var badgeClass = OP_BADGES[a.operation] || 'badge-muted';
@@ -2260,7 +2379,7 @@
 
     async function loadMemories() {
       var el = document.getElementById('view-memories');
-      el.innerHTML = '<div class="loading">Loading memories...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_memories')) + '</div>';
       // cap at 2000 so the viewer remains responsive on large
       // corpora. Older endpoints returned the full unbounded list which
       // hit the iii invocation timeout and the UI fell through to 0.
@@ -2405,7 +2524,7 @@
 
     async function loadTimeline() {
       var el = document.getElementById('view-timeline');
-      el.innerHTML = '<div class="loading">Loading timeline...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_timeline')) + '</div>';
       var sessResult = await apiGet('sessions');
       var sessions = (sessResult && sessResult.sessions) || [];
       state.timeline.loaded = true;
@@ -2456,7 +2575,7 @@
         content.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128337;</div><p>Select a session to view observations</p></div>';
         return;
       }
-      content.innerHTML = '<div class="loading">Loading observations...</div>';
+      content.innerHTML = '<div class="loading">' + esc(t('loading_observations')) + '</div>';
       var result = await apiGet('observations?sessionId=' + encodeURIComponent(state.timeline.sessionId));
       state.timeline.observations = (result && result.observations) || [];
       renderObservations();
@@ -2631,7 +2750,7 @@
 
     async function loadActivity() {
       var el = document.getElementById('view-activity');
-      el.innerHTML = '<div class="loading">Loading activity...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_activity')) + '</div>';
       var results = await Promise.all([
         apiGet('sessions'),
         apiGet('audit?limit=200')
@@ -2768,7 +2887,7 @@
 
     async function loadSessions() {
       var el = document.getElementById('view-sessions');
-      el.innerHTML = '<div class="loading">Loading sessions...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_sessions')) + '</div>';
       var result = await apiGet('sessions');
       state.sessions.items = (result && result.sessions) || [];
       state.sessions.loaded = true;
@@ -2821,7 +2940,7 @@
       var id = sessionId(s);
       if (!s || !id) { panel.innerHTML = ''; return; }
 
-      panel.innerHTML = '<div class="detail-panel"><h3>Loading session details…</h3></div>';
+      panel.innerHTML = '<div class="detail-panel"><h3>' + esc(t('loading_session_details')) + '</h3></div>';
 
       var obsRes = await apiGet('observations?sessionId=' + encodeURIComponent(id));
       var obs = (obsRes && obsRes.observations) || [];
@@ -2935,7 +3054,7 @@
 
     async function loadLessons() {
       var el = document.getElementById('view-lessons');
-      el.innerHTML = '<div class="loading">Loading lessons...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_lessons')) + '</div>';
       var result = await apiGet('lessons');
       state.lessons.items = (result && result.lessons) || [];
       state.lessons.loaded = true;
@@ -2997,7 +3116,7 @@
 
     async function loadActions() {
       var el = document.getElementById('view-actions');
-      el.innerHTML = '<div class="loading">Loading actions...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_actions')) + '</div>';
       var results = await Promise.all([apiGet('actions'), apiGet('frontier')]);
       state.actions.items = (results[0] && results[0].actions) || [];
       state.actions.frontier = (results[1] && (results[1].frontier || results[1].actions)) || [];
@@ -3072,7 +3191,7 @@
 
     async function loadCrystals() {
       var el = document.getElementById('view-crystals');
-      el.innerHTML = '<div class="loading">Loading crystals...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_crystals')) + '</div>';
       var results = await Promise.all([apiGet('crystals'), apiGet('lessons')]);
       state.crystals.items = (results[0] && results[0].crystals) || [];
       var lessonMap = {};
@@ -3185,7 +3304,7 @@
 
     async function loadAudit() {
       var el = document.getElementById('view-audit');
-      el.innerHTML = '<div class="loading">Loading audit log...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_audit')) + '</div>';
       var result = await apiGet('audit?limit=100');
       state.audit.entries = (result && result.entries) || [];
       state.audit.loaded = true;
@@ -3247,7 +3366,7 @@
 
     async function loadProfile() {
       var el = document.getElementById('view-profile');
-      el.innerHTML = '<div class="loading">Loading profile...</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_profile')) + '</div>';
       var sessResult = await apiGet('sessions');
       var sessions = (sessResult && sessResult.sessions) || [];
 
@@ -3288,7 +3407,7 @@
     async function loadProfileData() {
       var content = document.getElementById('profile-content');
       if (!content || !state.profile.selectedProject) return;
-      content.innerHTML = '<div class="loading">Loading profile data...</div>';
+      content.innerHTML = '<div class="loading">' + esc(t('loading_profile_data')) + '</div>';
       var result = await apiGet('profile?project=' + encodeURIComponent(state.profile.selectedProject));
       state.profile.data = (result && result.profile) ? result.profile : result;
       renderProfile();
@@ -3383,7 +3502,7 @@
 
     function startPolling() {
       if (pollTimer) return;
-      setWsStatus('polling · ' + (POLL_INTERVAL_MS / 1000) + 's', 'disconnected');
+      setWsStatus(t('ws_polling', { n: POLL_INTERVAL_MS / 1000 }), 'disconnected');
       var tick = 0;
       pollTimer = setInterval(function() {
         tick++;
@@ -3459,7 +3578,7 @@
               }
             }));
           }
-          setWsStatus('live', 'connected');
+          setWsStatus(t('ws_live_short'), 'connected');
         };
         ws.onmessage = function(e) {
           if (state.ws !== ws) return;
@@ -3483,7 +3602,7 @@
           }
           wsRetries++;
           if (wsRetries < WS_MAX_RETRIES) {
-            setWsStatus('connecting...', 'disconnected');
+            setWsStatus(t('ws_connecting'), 'disconnected');
             wsReconnectTimer = setTimeout(connectWs, 2000 + Math.min(wsRetries * 1000, 8000));
           } else {
             startPolling();
@@ -3606,9 +3725,9 @@
         banners.push({
           kind: 'warn',
           icon: '&#9888;',
-          title: f.label,
+          title: t('flag_' + f.key) !== 'flag_' + f.key ? t('flag_' + f.key) : f.label,
           keyLabel: f.key,
-          desc: f.description + (f.needsLlm ? ' Requires an LLM provider key (ANTHROPIC_API_KEY, GEMINI_API_KEY, etc.).' : ''),
+          desc: f.description + (f.needsLlm ? t('flag_needs_llm') : ''),
           enable: f.enableHow,
           docs: f.docsHref,
           dismissKey: f.key,
@@ -3618,9 +3737,9 @@
         banners.unshift({
           kind: 'warn',
           icon: '&#128274;',
-          title: 'No LLM provider key set',
+          title: t('flag_provider_title'),
           keyLabel: 'ANTHROPIC_API_KEY',
-          desc: 'Compression, summarization, and graph extraction stay disabled until a key is provided.',
+          desc: t('flag_provider_desc'),
           enable: 'export ANTHROPIC_API_KEY=sk-ant-...\n# then restart: npx @agentmemory/agentmemory',
           docs: 'https://github.com/rohitg00/agentmemory#quick-start',
           dismissKey: '__provider_noop',
@@ -3630,9 +3749,9 @@
         banners.push({
           kind: 'info',
           icon: '&#9881;',
-          title: 'Running in BM25-only mode',
+          title: t('flag_bm25_title'),
           keyLabel: 'OPENAI_API_KEY',
-          desc: 'Semantic vector search is off. BM25 keyword search is active and good for exact matches.',
+          desc: t('flag_bm25_desc'),
           enable: 'export OPENAI_API_KEY=sk-...\n# or VOYAGE_API_KEY, COHERE_API_KEY, OLLAMA_HOST',
           docs: 'https://github.com/rohitg00/agentmemory#embedding-providers',
           dismissKey: '__embedding_none',
@@ -3643,8 +3762,8 @@
       var infoCount = banners.filter(function(b) { return b.kind === 'info'; }).length;
       var expanded = host.getAttribute('data-expanded') === '1';
       var pills = '';
-      if (warnCount) pills += '<span class="flag-pill">' + warnCount + ' off</span>';
-      if (infoCount) pills += '<span class="flag-pill info">' + infoCount + ' note</span>';
+      if (warnCount) pills += '<span class="flag-pill">' + escHtml(t('flags_off', { n: warnCount })) + '</span>';
+      if (infoCount) pills += '<span class="flag-pill info">' + escHtml(t('flags_note', { n: infoCount })) + '</span>';
       var escHtml = function(s) {
         return String(s).replace(/[<>&"]/g, function(c) {
           return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
@@ -3657,15 +3776,15 @@
             '<div class="flag-title">' + escHtml(b.title) + ' <code>' + escHtml(b.keyLabel) + '</code></div>' +
             '<div class="flag-desc">' + escHtml(b.desc) + '</div>' +
             '<code class="flag-enable">' + escHtml(b.enable) + '</code>' +
-            (b.docs ? ' <a class="empty-link" href="' + escHtml(b.docs) + '" target="_blank" rel="noopener">Learn more &rarr;</a>' : '') +
+            (b.docs ? ' <a class="empty-link" href="' + escHtml(b.docs) + '" target="_blank" rel="noopener">' + escHtml(t('flags_learn')) + '</a>' : '') +
           '</div>' +
-          '<button type="button" class="flag-close" data-dismiss-flag="' + escHtml(b.dismissKey) + '" aria-label="Dismiss">&times;</button>' +
+          '<button type="button" class="flag-close" data-dismiss-flag="' + escHtml(b.dismissKey) + '" aria-label="' + escHtml(t('flags_dismiss')) + '">&times;</button>' +
         '</div>';
       }).join('');
       host.innerHTML = '<button type="button" class="flag-summary" data-action="toggle-flags" aria-expanded="' + (expanded ? 'true' : 'false') + '" aria-controls="flag-list">' +
           pills +
-          '<span class="flag-count">Feature flags</span>' +
-          '<span style="color:var(--ink-faint);">— click to ' + (expanded ? 'collapse' : 'expand') + '</span>' +
+          '<span class="flag-count">' + escHtml(t('footer_flags')) + '</span>' +
+          '<span style="color:var(--ink-faint);">— ' + escHtml(t(expanded ? 'flags_collapse' : 'flags_expand')) + '</span>' +
           '<span class="flag-toggle" aria-hidden="true">' + (expanded ? '&#9650;' : '&#9660;') + '</span>' +
         '</button>' +
         '<div class="flag-list' + (expanded ? ' open' : '') + '" id="flag-list">' + listHtml + '</div>';
@@ -3727,6 +3846,10 @@
 
       if (action === 'toggle-theme') {
         toggleTheme();
+        return;
+      }
+      if (action === 'toggle-locale') {
+        toggleLocale();
         return;
       }
       if (action === 'refresh-dashboard') {
@@ -3820,7 +3943,7 @@
 
     async function loadReplay() {
       var el = document.getElementById('view-replay');
-      el.innerHTML = '<div class="loading">Loading sessions…</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_sessions')) + '</div>';
       var res = await apiGet('replay/sessions');
       state.replay.sessions = (res && res.sessions) || [];
       state.replay.loaded = true;
@@ -3920,7 +4043,7 @@
       state.replay.playing = false;
       if (!sessionId) { renderReplay(); return; }
       var el = document.getElementById('view-replay');
-      el.innerHTML = '<div class="loading">Loading replay…</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('loading_replay')) + '</div>';
       var res = await apiGet('replay/load?sessionId=' + encodeURIComponent(sessionId));
       if (res && res.success && res.timeline) {
         state.replay.timeline = res.timeline;
@@ -4009,7 +4132,7 @@
       if (pathVal) body.path = pathVal;
       var el = document.getElementById('view-replay');
       var prior = el.innerHTML;
-      el.innerHTML = '<div class="loading">Importing JSONL…</div>';
+      el.innerHTML = '<div class="loading">' + esc(t('importing_jsonl')) + '</div>';
       var res = await apiPost('replay/import-jsonl', body);
       if (!res || res.success === false) {
         el.innerHTML = prior;
@@ -4027,6 +4150,43 @@
       else if (e.key === 'ArrowLeft') { e.preventDefault(); stepReplay(-1); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); stepReplay(1); }
     });
+
+    function applyStaticI18n() {
+      document.documentElement.lang = viewerLocale;
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        if (el.id === 'footer-version' && el.textContent && el.textContent.charAt(0) === 'v') return;
+        el.textContent = t(el.getAttribute('data-i18n'));
+      });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+        el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+      });
+      var langBtn = document.getElementById('lang-toggle');
+      if (langBtn) langBtn.textContent = viewerLocale === 'ru' ? 'EN' : 'RU';
+      var themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) themeBtn.textContent = isDarkMode() ? t('theme_light') : t('theme_dark');
+      var fb = document.getElementById('footer-feedback');
+      if (fb) fb.textContent = t('footer_report');
+    }
+    function invalidateAllTabs() {
+      Object.keys(state).forEach(function(k) {
+        if (state[k] && typeof state[k] === 'object' && Object.prototype.hasOwnProperty.call(state[k], 'loaded')) {
+          state[k].loaded = false;
+        }
+      });
+    }
+    function setViewerLocale(loc) {
+      if (loc !== 'en' && loc !== 'ru') return;
+      viewerLocale = loc;
+      localStorage.setItem('agentmemory-locale', loc);
+      applyStaticI18n();
+      invalidateAllTabs();
+      if (state.flagsConfig) renderFlagBanners(state.flagsConfig);
+      switchTab(state.activeTab);
+    }
+    window.toggleLocale = function() {
+      setViewerLocale(viewerLocale === 'ru' ? 'en' : 'ru');
+    };
+    applyStaticI18n();
 
     switchTab(tabFromRoute(), { replaceRoute: true });
     connectWs();

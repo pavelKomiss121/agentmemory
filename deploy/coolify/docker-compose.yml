@@ -1,8 +1,8 @@
 services:
   agentmemory:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: deploy/coolify/Dockerfile
       args:
         AGENTMEMORY_VERSION: "0.9.22"
         III_VERSION: "0.11.2"

@@ -67,6 +67,12 @@ holds the unauthenticated admin surface in older releases and the
 proxied surface in current ones, neither of which belongs on the open
 internet. Two paths to reach it:
 
+**Russian UI (optional):** the Coolify/Dokploy Dockerfile overlays
+`src/viewer/index.html` from this repo onto the npm package at build
+time. Default locale is Russian when the browser language is `ru`;
+use the **RU/EN** toggle in the header or `?lang=ru` / `?lang=en` in
+the URL. Redeploy with **force recreate** after changing viewer files.
+
 **Option A — SSH tunnel from the Coolify host.** Coolify gives you SSH
 access to the underlying VPS. From your laptop:
 
